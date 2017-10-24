@@ -1,0 +1,23 @@
+plugins {
+    id'java'
+    id'application'
+    id'com.github.johnrengelman.shadow' version '2.0.1'
+}
+
+mainClassName = 'com.boolean_coercion.dscrdhmdbridge.Main'
+
+version '1.1'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'net.dv8tion:JDA:3.3.1_286'
+    compile 'org.json:json:20170516'
+}
+
+compileJava.options.encoding = 'UTF-8'
