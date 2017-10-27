@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'com.boolean_coercion.dscrdhmdbridge.Main'
 
-version '1.1'
+version '1.2'
 
 sourceCompatibility = 1.8
 
