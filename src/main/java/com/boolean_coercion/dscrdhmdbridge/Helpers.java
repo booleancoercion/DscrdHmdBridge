@@ -8,10 +8,10 @@ import java.security.cert.CertificateException;
 
 public class Helpers {
 
-	public static final String TOKEN = "[REDACTED]";
-	public static String HMD_TOKEN = "[REDACTED]";
+	public static String HMD_TOKEN = "[NOPE]";
+	public static final String TOKEN = "[NOPE]";
 
-	public static OkHttpClient client = getUnsafeOkHttpClient();
+	public static OkHttpClient client = new OkHttpClient();
 
 	public static JSONObject newCall(Request request) throws IOException{
 		return new JSONObject(client.newCall(request).execute().body().string());
@@ -44,47 +44,5 @@ public class Helpers {
 
 	public static Request newRequest(String endpoint, JSONObject json){
 		return newRequest(endpoint, json.toString());
-	}
-
-	private static OkHttpClient getUnsafeOkHttpClient() {
-		try {
-			// Create a trust manager that does not validate certificate chains
-			final TrustManager[] trustAllCerts = new TrustManager[] {
-				new X509TrustManager() {
-					@Override
-					public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-					}
-
-					@Override
-					public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-					}
-
-					@Override
-					public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-						return new java.security.cert.X509Certificate[]{};
-					}
-				}
-			};
-
-			// Install the all-trusting trust manager
-			final SSLContext sslContext = SSLContext.getInstance("SSL");
-			sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-			// Create an ssl socket factory with our all-trusting manager
-			final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-
-			OkHttpClient.Builder builder = new OkHttpClient.Builder();
-			builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
-			builder.hostnameVerifier(new HostnameVerifier() {
-				@Override
-				public boolean verify(String hostname, SSLSession session) {
-					return true;
-				}
-			});
-
-			OkHttpClient okHttpClient = builder.build();
-			return okHttpClient;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 }

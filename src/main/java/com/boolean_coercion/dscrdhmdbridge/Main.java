@@ -98,7 +98,7 @@ class Listener extends ListenerAdapter {
 		TextChannel channel = event.getChannel();
 		String chName = channel.getName();
 		Message message = event.getMessage();
-		String rawContent = event.getMessage().getRawContent();
+		String rawContent = event.getMessage().getContentRaw();
 		String safeRaw = rawContent.replaceAll("`[A-Za-z0-9]([^`]*)`", "$1").replace('`', '\'');
 
 		TextChannel botlogs = event.getJDA().getTextChannelById("367650691252224001");
